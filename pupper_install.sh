@@ -49,9 +49,9 @@ source /opt/ros/humble/setup.bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 if ! [ -d "mini_pupper_ros" ]; then
-  git clone https://github.com/mangdangroboticsclub/mini_pupper_ros.git -b ros2-dev mini_pupper_ros
+  git clone https://github.com/banban1029/mini_pupper_ros.banban -b ros2-dev mini_pupper_ros.banban
 fi
-vcs import < mini_pupper_ros/.minipupper.repos --recursive
+vcs import < mini_pupper_ros.banban/.minipupper.repos --recursive
 # compiling gazebo and cartographer on Raspberry Pi is not recommended
 touch champ/champ/champ_gazebo/AMENT_IGNORE
 touch champ/champ/champ_navigation/AMENT_IGNORE
@@ -70,7 +70,7 @@ pip3 install simple_pid
 MAKEFLAGS=-j1 colcon build --executor sequential --symlink-install
 
 # show IP address on LCD when boot up
-cd ~/mini_pupper_ros/
+cd ~/mini_pupper_ros.banban/
 sudo mv robot.service /etc/systemd/system/
 sudo mkdir -p /var/lib/minipupper/
 sudo mv run.sh /var/lib/minipupper/
