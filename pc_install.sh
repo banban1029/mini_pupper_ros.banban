@@ -24,7 +24,7 @@ source /opt/ros/humble/setup.bash
 mkdir -p ~/minipupper_ws/ros2_ws/src
 cd ~/minipupper_ws/ros2_ws/src
 if ! [ -d "mini_pupper_ros.banban" ]; then
-  git clone https://github.com/banban1029/mini_pupper_ros.banban -b ros2-dev mini_pupper_ros.banban
+  git clone https://github.com/banban1029/mini_pupper_ros.banban -b banban-dev mini_pupper_ros.banban
 
 fi
 vcs import < mini_pupper_ros.banban/.minipupper.repos --recursive

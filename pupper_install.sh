@@ -49,7 +49,7 @@ source /opt/ros/humble/setup.bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 if ! [ -d "mini_pupper_ros" ]; then
-  git clone https://github.com/banban1029/mini_pupper_ros.banban -b ros2-dev mini_pupper_ros.banban
+  git clone https://github.com/banban1029/mini_pupper_ros.banban -b banban-dev mini_pupper_ros.banban
 fi
 vcs import < mini_pupper_ros.banban/.minipupper.repos --recursive
 # compiling gazebo and cartographer on Raspberry Pi is not recommended
