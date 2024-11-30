@@ -19,8 +19,8 @@ Supported Software versions
 
 Supported Hardware versions
 
-* Mini Pupper: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1aSKxSVc2tKQPeyAFTI9EaTHUAFZCWseo?usp=sharing) )
-* Mini Pupper 2: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1j3ip6XKhgUHC9gO1blBm4xIjogaUM9yk?usp=sharing) ).
+* Mini Pupper: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1jJm_6qBIYGGp2dpZNm668D0eH1JpfCqn?usp=sharing) )
+* Mini Pupper 2: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1_HNbIb2RDmHpwECjqiVlkylvU19BSfOh?usp=sharing) ).
 
 
 ## 1. Installation
