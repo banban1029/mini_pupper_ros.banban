@@ -31,10 +31,10 @@ def generate_launch_description():
 
     return LaunchDescription([
        Node(
-            package="rviz2",
-            namespace="",
-            executable="rviz2",
-            name="rviz2",
-            arguments=["-d", rviz_config_path]
+            package='rviz2',
+            namespace='',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz_config_path]
         )
     ])
