@@ -9,13 +9,19 @@
 # Mini Pupper ROS 2 Humble
 
 Make sure the bsp package is installed to your pupper before installing this repositiory if you are not using a pre-built image to install this repository. 
-Please refer to https://github.com/mangdangroboticsclub/mini_pupper_2_bsp (bsp for mini pupper 2) or https://github.com/mangdangroboticsclub/mini_pupper_bsp (bsp for mini pupper) according to your model.
+Please refer to [bsp for mini pupper 2](https://github.com/mangdangroboticsclub/mini_pupper_2_bsp) or [bsp for mini pupper](https://github.com/mangdangroboticsclub/mini_pupper_bsp) according to your model.
 
-For a more detailed guide, please refer to our documentation website https://minipupperdocs.readthedocs.io/en/latest/.
+For a more detailed guide, please refer to our [online documentation](https://minipupperdocs.readthedocs.io/en/latest/).
 
-Supported versions
+Supported Software versions
 
 * Ubuntu 22.04 + ROS 2 Humble
+
+Supported Hardware versions
+
+* Mini Pupper: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1jJm_6qBIYGGp2dpZNm668D0eH1JpfCqn?usp=sharing) )
+* Mini Pupper 2: ( [ROS pre-built image here](https://drive.google.com/drive/folders/1_HNbIb2RDmHpwECjqiVlkylvU19BSfOh?usp=sharing) ).
+
 
 ## 1. Installation
 
@@ -100,13 +106,39 @@ __This command can be used on both PC and Mini Pupper__
 # Terminal 1 (ssh to real mini pupper)
 nano ~/.bashrc
 export ROS_DOMAIN_ID=42 #add to the final line of the file
+
+# If your robot is Mini Pupper 2
+export ROBOT_MODEL=mini_pupper_2
+
+# If your robot is Mini Pupper
+export ROBOT_MODEL=mini_pupper
 ```
+
+Save the file and run the following command to apply the change.
+```sh
+# Terminal 1 (ssh to real mini pupper)
+source ~/.bashrc
+```
+
 
 ```sh
 # Terminal 2 (on PC)
 nano ~/.bashrc
 export ROS_DOMAIN_ID=42 #add to the final line of the file
+
+# If your robot is Mini Pupper 2
+export ROBOT_MODEL=mini_pupper_2
+
+# If your robot is Mini Pupper
+export ROBOT_MODEL=mini_pupper
 ```
+
+Save the file and run the following command to apply the change.
+```sh
+# Terminal 2 (on PC)
+source ~/.bashrc
+```
+
 
 Use the following command in both terminals to confirm that the PC and the mini pupper are connected:
 
@@ -176,7 +208,7 @@ Note: This step is only for PC
 ```sh
 # Terminal 1
 . ~/ros2_ws/install/setup.bash # setup.zsh if you use zsh instead of bash
-ros2 launch mini_pupper_gazebo gazebo.launch.py
+ros2 launch mini_pupper_simulation main.launch.py
 ```
 
 - If using keyboard control
@@ -200,7 +232,7 @@ Note: This step is only for PC
 ```sh
 # Terminal 1
 . ~/ros2_ws/install/setup.bash
-ros2 launch mini_pupper_gazebo gazebo.launch.py
+ros2 launch mini_pupper_simulation main.launch.py
 ```
 
 - Mapping on PC

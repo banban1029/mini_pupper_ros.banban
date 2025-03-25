@@ -27,25 +27,25 @@ from launch.conditions import IfCondition
 
 def generate_launch_description():
 
-    has_lidar = LaunchConfiguration("has_lidar")
+    has_lidar = LaunchConfiguration('has_lidar')
     has_lidar_launch_arg = DeclareLaunchArgument(
         name='has_lidar',
         description='if the robot has lidar sensor'
     )
 
-    has_imu = LaunchConfiguration("has_imu")
+    has_imu = LaunchConfiguration('has_imu')
     has_imu_launch_arg = DeclareLaunchArgument(
         name='has_imu',
         description='if the robot has imu sensor'
     )
 
-    has_camera = LaunchConfiguration("has_camera")
+    has_camera = LaunchConfiguration('has_camera')
     has_camera_launch_arg = DeclareLaunchArgument(
         name='has_camera',
         description='if the robot has camera module'
     )
 
-    lidar_port = LaunchConfiguration("lidar_port")
+    lidar_port = LaunchConfiguration('lidar_port')
     lidar_port_launch_arg = DeclareLaunchArgument(
         name='lidar_port',
         description='The serial port for the lidar sensor'

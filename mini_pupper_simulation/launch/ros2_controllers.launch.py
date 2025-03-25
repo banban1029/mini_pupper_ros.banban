@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-
+#
 # SPDX-License-Identifier: Apache-2.0
 #
-# Copyright (c) 2022-2023 MangDang
+# Copyright (c) 2024 MangDang
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,25 +16,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from launch import LaunchDescription
-from launch.substitutions import PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    description_package = FindPackageShare('mini_pupper_description')
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output='screen'
+    )
 
-    rviz_config_path = PathJoinSubstitution(
-        [description_package, 'rviz', 'urdf_viewer.rviz']
+    joint_group_effort_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_group_effort_controller"],
+        output='screen'
     )
 
     return LaunchDescription([
-       Node(
-            package='rviz2',
-            namespace='',
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', rviz_config_path]
-        )
+        joint_state_broadcaster_spawner,
+        joint_group_effort_controller_spawner
     ])

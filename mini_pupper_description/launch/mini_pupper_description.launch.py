@@ -49,7 +49,7 @@ def generate_launch_description():
         FindPackageShare('mini_pupper_description'),
         'urdf',
         ROBOT_MODEL,
-        'mini_pupper_description.urdf'
+        'mini_pupper_description.urdf.xacro'
     ])
 
     declare_description_path = DeclareLaunchArgument(
@@ -61,7 +61,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
 
         parameters=[
-            {"robot_description": Command([description_path])},
+            {"robot_description": Command(["xacro ", description_path])},
             {"use_tf_static": False},
             {"publish_frequency": 200.0},
             {"ignore_timestamp": True},

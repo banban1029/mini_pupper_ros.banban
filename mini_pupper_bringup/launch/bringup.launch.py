@@ -26,7 +26,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch.conditions import IfCondition
 from ament_index_python.packages import get_package_share_directory
 
-ROBOT_MODEL = os.getenv('ROBOT_MODEL', default="mini_pupper_2")
+ROBOT_MODEL = os.getenv('ROBOT_MODEL', default='mini_pupper_2')
 
 
 def get_config():
@@ -48,29 +48,8 @@ def get_config():
 
 
 def generate_launch_description():
-
+    bringup_package = FindPackageShare('mini_pupper_bringup')
     description_package = FindPackageShare('mini_pupper_description')
-
-    description_path = PathJoinSubstitution(
-        [description_package, 'urdf', ROBOT_MODEL, 'mini_pupper_description.urdf.xacro']
-    )
-
-    joints_config_path = PathJoinSubstitution(
-        [description_package, 'config', 'champ', ROBOT_MODEL, 'joints.yaml']
-    )
-    links_config_path = PathJoinSubstitution(
-        [description_package, 'config', 'champ', ROBOT_MODEL, 'links.yaml']
-    )
-    gait_config_path = PathJoinSubstitution(
-        [description_package, 'config', 'champ', ROBOT_MODEL, 'gait.yaml']
-    )
-
-    champ_bringup_launch_path = PathJoinSubstitution(
-        [FindPackageShare('champ_bringup'), 'launch', 'bringup.launch.py']
-    )
-    hardware_interface_launch_path = PathJoinSubstitution(
-        [FindPackageShare('mini_pupper_bringup'), 'launch', 'hardware_interface.launch.py']
-    )
 
     sensors_config, ports_config = get_config()
 
@@ -87,46 +66,63 @@ def generate_launch_description():
         description='Use simulation (Gazebo) clock if true'
     )
 
-    hardware_connected = LaunchConfiguration("hardware_connected")
+    hardware_connected = LaunchConfiguration('hardware_connected')
     hardware_connected_launch_arg = DeclareLaunchArgument(
         name='hardware_connected',
         default_value='True',
         description='Set to true if connected to a physical robot'
     )
 
-    champ_bringup_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(champ_bringup_launch_path),
+    description_launch_path = PathJoinSubstitution(
+        [description_package, 'launch', 'mini_pupper_description.launch.py']
+    )
+    description_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(description_launch_path),
         launch_arguments={
-            "use_sim_time": use_sim_time,
-            "robot_name": ROBOT_MODEL,
-            "gazebo": use_sim_time,
-            "rviz": "False",  # set always false to launch RViz2 with costom .rviz file
-            "joint_hardware_connected": hardware_connected,
-            "orientation_from_imu": has_imu,
-            "publish_foot_contacts": "True",
-            "close_loop_odom": "True",
-            "joint_controller_topic": "joint_group_effort_controller/joint_trajectory",
-            "joints_map_path": joints_config_path,
-            "links_map_path": links_config_path,
-            "gait_config_path": gait_config_path,
-            "description_path": description_path
+            'use_sim_time': use_sim_time,
         }.items()
     )
 
+    hardware_interface_launch_path = PathJoinSubstitution(
+        [bringup_package, 'launch', 'hardware_interface.launch.py']
+    )
     hardware_interface_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(hardware_interface_launch_path),
         condition=IfCondition(hardware_connected),
         launch_arguments={
-            "has_lidar": has_lidar,
-            "has_imu": has_imu,
-            "has_camera": has_camera,
-            "lidar_port": lidar_port
+            'has_lidar': has_lidar,
+            'has_imu': has_imu,
+            'has_camera': has_camera,
+            'lidar_port': lidar_port
+        }.items()
+    )
+
+    champ_controllers_launch_path = PathJoinSubstitution(
+        [bringup_package, 'launch', 'champ_controllers.launch.py']
+    )
+    champ_controllers_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(champ_controllers_launch_path),
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'has_imu': has_imu
+        }.items()
+    )
+
+    ekf_localization_launch_path = PathJoinSubstitution(
+        [bringup_package, 'launch', 'ekf_localization.launch.py']
+    )
+    ekf_localization_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(ekf_localization_launch_path),
+        launch_arguments={
+            'use_sim_time': use_sim_time
         }.items()
     )
 
     return LaunchDescription([
         use_sim_time_launch_arg,
         hardware_connected_launch_arg,
-        champ_bringup_launch,
-        hardware_interface_launch
+        description_launch,
+        hardware_interface_launch,
+        champ_controllers_launch,
+        ekf_localization_launch
     ])
